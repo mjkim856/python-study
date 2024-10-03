@@ -4,7 +4,7 @@ while treehit < 10:
     treehit = treehit + 1   
     print("%d treehit!" % treehit)
     if treehit == 10:
-        print("The tree falls")
+        print("The tree falls")  
 
 print()
 
