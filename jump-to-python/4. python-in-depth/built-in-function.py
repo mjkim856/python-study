@@ -32,4 +32,39 @@ print()
 print("enumerate : 열거하다, 순서가 있는 데이터를 받아 인덱스값을 포함하는 enumerate 객체 리턴\n보통 for문과 함께 쓴다.")
 for i in enumerate(['a', 'b', 'c']):
     print(i)
+# 출력
+# (0, 'a')
+# (1, 'b')
+# (2, 'c')
 print()
+
+print("eval : 문자열로 된 표현식을 입력으로 받아 => 해당 문자열을 실행한 결과값을 리턴")
+print(eval('1+2'))           # 3
+print(eval('divmod(4, 3)'))  # (1, 1)
+print(eval('1+2*3'))         # 7
+print(eval("'hi' + 'ai'"))   # hiai
+print()
+
+print("filter : filter(함수, 반복_가능한_데이터)\n반복 가능한 요소 순서대로 함수 호출시 리턴값이 True인 것만 걸러내 묶어 리턴한다.")
+print("예시1 : filter 미사용 - 양수값만 리턴하는 함수")
+def positive1(li):
+    result = []
+    for i in li:
+        if i > 0:
+            result.append(i)
+    return result
+
+print(positive1([-1, 2, -3, 4, 0])) # [2, 4]
+
+print("\n예시2 : filter 사용 - 양수값만 리턴하는 함수")
+def positive2(i):
+    return i > 0
+
+print(list(filter(positive2, ([-1, 2, -3, 4, 0])))) # [2, 4]
+
+print("\n예시3 : filter + lambda 사용 - 양수값만 리턴하는 함수")
+print(list(filter(lambda x: x > 0, [-1, 2, -3, 4, 0])))
+
+print("\nlambda 예시") # lambda 설명을 따로 올리지 않은 거 같아 여기에 추가...
+addl = lambda a, b: a+b
+print(addl(1, 2)) # 3
