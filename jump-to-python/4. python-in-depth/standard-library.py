@@ -50,44 +50,144 @@ zip2 = [1, 2, 3]
 print(list(itertools.zip_longest(zip1, zip2)))
 # [('a', 1), ('b', 2), ('c', 3), ('d', None), ('e', None)]
 
+print(list(itertools.permutations([1, 2, 3], 2))) 
+# 순열 리턴, [(1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)]
+
+print(list(itertools.combinations([1, 2, 3, 4, 5], 2))) 
+# 순서 상관없이 2장, [(1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5), (3, 4), (3, 5), (4, 5)]
+
 print()
 
 print("=====[5. import functools]=====")
+import functools
+
+data1 = [1, 2, 3, 4, 5]
+result1 = functools.reduce(lambda x, y: x + y, data1)
+print(result1)  # 15
+
+# 람다가 익숙하지 않아서 그런지 잘 이해가 가지 않아서 람다 없는 reduce()로 변경해봄
+def ex_reduce(a, b):
+    return a + b
+
+result2 = functools.reduce(ex_reduce, data1)
+
+print(result2)  # 15
+
+# 최댓값 구하기
+max = functools.reduce(lambda x, y: x if x > y else y, data1)
+print(max)  # 5
 
 print()
 
 print("=====[6. import itemgetter]====")
+from operator import itemgetter
+
+student = [
+    ('jane', 54, "a"),
+    ('mike', 12, "n"),
+    ('tom', 43, "a")
+]
+print(sorted(student, key=itemgetter(1)))   # [1] 번째 요소를 기준으로 정렬
+# [('mike', 12, 'n'), ('tom', 43, 'a'), ('jane', 54, 'a')]
+
+student = [
+    {"name": "jane", "age": 22, "grade": "a"},
+    {"name": "mike", "age": 24, "grade": "n"},
+    {"name": "tom", "age": 56, "grade": "a"}
+]
+print(sorted(student, key=itemgetter('age')))   # age 요소를 기준으로 정렬
+#[{'name': 'jane', 'age': 22, 'grade': 'a'}, {'name': 'mike', 'age': 24, 'grade': 'n'}, {'name': 'tom', 'age': 56, 'grade': 'a'}]
 
 print()
 
 print("=====[7. import shutil]========")
+# 파일을 이동하거나 복사할 때 사용하는 모듈이다.
+import shutil
+# shutil.copy("file1.txt", "file3.txt")   # file1.txt의 내용이 file3.txt으로 복사된다.
+# shutil.move("file5.txt", "file4.txt")   # file5.txt의 내용이 file4.txt로 복사되고, file5.txt는 삭제된다.
 
 print()
 
 print("=====[8. import glob]==========")
+import glob
+print(glob.glob("/Users/mjk/git_python/*"))
+# 디렉터리 안의 파일을 읽어서 리턴
+# ['/Users/mjk/git_python/file3.txt', '/Users/mjk/git_python/file1.txt', ... ]
+
 print()
 
-
 print("=====[9. import pickle]========")
+import pickle
+# 객체의 상태를 그대로 유지하며 파일에 저장하고 불러올 수 있게 한다.
+# f = open("test.txt", "wb")
+# pickle.dump(data, f)
+# f = open("test.txt", "rb")
+# pickle.load(f)
 
 print()
 
 print("=====[10. import os]===========")
+import os
+# 추가 함수는 책 참고
+print(os.environ)           # environ({'__CFBundleIdentifier': 'com.microsoft.VSCode' ... })
+print(os.environ['PATH'])   # /usr/local/bin:/System/ ... 
 
 print()
 
+print("=====[11. import zipfile]=====")
+import zipfile
+# 여러 개의 파일을 zip 형식으로 합치거나 해제할 때 사용한다.
+
+print()
+
+print("=====[11. import threading]=====")
+import threading
+# 스레드 객체를 사용해 동시 작업을 가능하게 해준다.
+# 스레드 생성 >> t = threading.Thread(target=long_task)
+# 스레드 종료될때까지 기다리게 하기 = t.join()
+
+print()
 
 print("=====[11. import tempfile]=====")
+# 임시 파일 만들어 사용하는 용도의 모듈
+import tempfile
+print(tempfile.mktemp())        # 이름만 반환, /var/folders/52/mltn2wv97fxf6g7j2d0k0c8h0000gn/T/tmpkl2s74pd
+f = tempfile.TemporaryFile()    # 임시 저장 공간으로 사용할 파일 객체 리턴
+f.close()                       # 파일 삭제됨
 
 print()
 
-print("=====[12. import trackback]====")
+print("=====[12. import traceback]====")
+# 프로그램 실행 중 발생한 오류를 추적하고자 할 때 사용하는 모듈
+import traceback
+
+def a():
+    return 1/0
+
+def b():
+    a()
+
+def main():
+    try:
+        b()
+    except:
+        print("오류가 발생했습니다.")
+        print(traceback.format_exc())
+
+main()
+
+'''
+Traceback (most recent call last):
+  File "/Users/mzc01-mjk/git_python/python-study/jump-to-python/4. python-in-depth/standard-library.py", line 172, in main
+    b()
+  File "/Users/mzc01-mjk/git_python/python-study/jump-to-python/4. python-in-depth/standard-library.py", line 168, in b
+    a()
+  File "/Users/mzc01-mjk/git_python/python-study/jump-to-python/4. python-in-depth/standard-library.py", line 165, in a
+    return 1/0
+ZeroDivisionError: division by zero
+'''
 
 print()
-
-print("=====[13. import datetime]=====")
-print()
-
 
 print("=====[14. import json]=========")
 import json
