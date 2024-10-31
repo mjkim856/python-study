@@ -7,6 +7,8 @@ dayy = day1 - day2
 print(dayy) # 4 days, 0:00:00 (반대면 -4일)
 print(dayy.days) # 4
 
+print(datetime.datetime.now())  # 2024-10-31 15:16:11.939999
+
 print("\n요일 확인법")
 print(day1.weekday())       # 0 월요일, 1 화요일, 2 수요일 ... 
 print(day1.isoweekday())    # 1 월요일, 2 화요일, 3 수요일 ... 
@@ -53,8 +55,9 @@ print(list(itertools.zip_longest(zip1, zip2)))
 print(list(itertools.permutations([1, 2, 3], 2))) 
 # 순열 리턴, [(1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)]
 
-print(list(itertools.combinations([1, 2, 3, 4, 5], 2))) 
-# 순서 상관없이 2장, [(1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5), (3, 4), (3, 5), (4, 5)]
+print(list(itertools.combinations([1, 2, 3], 2))) 
+# [(1, 2), (1, 3), (2, 3)]
+# 겹친 거 리턴 안 함
 
 print()
 
