@@ -44,6 +44,7 @@ print(list(filter(lambda x: x>0, [1, -2, 3, -5, 8, -3])))
 # 5
 print("\n5. 16진수 => 10진수로 변경")
 print(int('0xff', 16))  # 아하!!
+print(int(0xff))        # 255
 
 # 6
 print("\n6. 리스트 항목마다 3 곱해서 리턴하기")
@@ -56,7 +57,7 @@ print(max(li) + min(li))    # -1
 
 # 8
 print("\n8. 소수점 반올림하기")
-print(round(17/3, 4))
+print(round(17/3, 4))       # 5.6667
 
 # 9
 print("\n9. 디렉터리 이동하고 파일 목록 출력하기")
@@ -79,7 +80,15 @@ print("\n12. 로또 번호 출력하기")
 import random
 
 for i in range(6):
-    print(random.randint(1, 45))
+    print(random.randint(1, 45))        # 아항항 잘못 적음... 중복됨
+
+# 12-1
+print("\n12-1. 로또 번호 출력하기") 
+
+
+# 12-2
+print("\n12-2. 로또 번호 출력하기")  
+print(sorted(random.sample(range(1,46),6)))
 
 # 13
 print("\n13. 누나는 연상")
@@ -102,11 +111,14 @@ print(sorted(data, key=itemgetter(1)))
 print("\n15. 청소 당번 두 명 구하기")
 import itertools
 dang = ['당1', '당2', '당3', '당4']
-print(len(list(itertools.combinations(dang, 2))))   # 6
+print(len(list(itertools.combinations(dang, 2))))   # 6     이것도 잘못 푼 듯? ㅋㅋㅋㅋㅋㅋㅋㅋ
+print(list(itertools.combinations(dang, 2)))        
+# >> 이케 나와야 함! [('당1', '당2'), ('당1', '당3'), ('당1', '당4'), ('당2', '당3'), ('당2', '당4'), ('당3', '당4')]
 
 # 16
 print("\n16. 문자열 경우의 수 나열하기")
 print(list(itertools.permutations("abcd", 4)))
+# 아 근데... 이것도 잘못 푼 듯 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 다 합쳐야 한다? 고 한? 다?
 '''
 [('a', 'b', 'c', 'd'), ('a', 'b', 'd', 'c'), ('a', 'c', 'b', 'd'), ('a', 'c', 'd', 'b'), 
 ('a', 'd', 'b', 'c'), ('a', 'd', 'c', 'b'), ('b', 'a', 'c', 'd'), ('b', 'a', 'd', 'c'), 
@@ -117,7 +129,7 @@ print(list(itertools.permutations("abcd", 4)))
 '''
 
 # 17
-print("\n17. 5명에게 할일 부여하기")
+print("\n17. 5명에게 할일 부여하기")        # 이거 출력을 l2로만 ... 
 import random
 l1 = ['1번', '2번', '3번', '4번', '5번']
 l2 = ['청소', '빨래', '설거지', '휴식', '휴식']
