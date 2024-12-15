@@ -15,6 +15,7 @@ black = (0,0,0)
 white = (255, 255, 255)
 red = (255,0,0)
 hint_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80)
+entry_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 60)
 
 # 소숫점을 정수로 변경해주는 함수
 def tup_r(tup):
@@ -25,6 +26,7 @@ def tup_r(tup):
         
     return tuple(temp_list)
 
+try_num = 0
 drop = False
 exit = False
 k = 0
@@ -103,7 +105,7 @@ while not exit:
     pygame.draw.line(screen, white, L, N, 3)      
     
     # 줄 자르기 위한 빨간 줄 애니메이션 코드
-    if drop == False:
+    if drop == False and try_num == 8:
         O = tup_r((size[0]/2-size[0]/6, E[1]/2+F[1]/2))
         P = (O[0]+k*2, O[1])
         if P[0] > size[0]/2+size[0]/6 :
@@ -120,6 +122,19 @@ while not exit:
     hint_size = hint.get_size()
     hint_pos = tup_r((size[0]/2-hint_size[0]/2, size[1]*5/6-hint_size[1]/2))
     screen.blit(hint, hint_pos)
+    
+    # 입력창 표시하기
+    entry_text = "Q"
+    entry = entry_font.render(entry_text, True, black)
+    entry_size = entry.get_size()
+    entry_pos = tup_r((size[0]/2-entry_size[0]/2, size[1]*17/18-entry_size[1]/2))
+    entry_bg_size = 80
+    
+    # 입력 텍스트 뒤의 하얀 네모창 만들기 (.rect)
+    # 도형은 왼쪽 위 좌표가 필요함 >> 왼쪽위x, 왼쪽위y
+    pygame.draw.rect(screen, white, (size[0]/2-entry_bg_size/2, size[1]*17.5/18-entry_bg_size/2
+                                     ,entry_bg_size ,entry_bg_size))
+    screen.blit(entry, entry_pos)
     
     # 4-5. 업데이트
     pygame.display.flip()
