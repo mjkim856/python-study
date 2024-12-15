@@ -26,7 +26,9 @@ def tup_r(tup):
         
     return tuple(temp_list)
 
+entry_text = ""
 try_num = 0
+enter_go = False
 drop = False
 exit = False
 k = 0
@@ -37,9 +39,18 @@ while not exit:
     clock.tick(60)
     
     # 4-2. 각종 입력 감지
-    for event in pygame.event.get():  # 리스트로 반환됨 << 예시로 마우스 키보드 입력이 동시에 일어날 수도 있음
+    for event in pygame.event.get(): # 리스트로 반환됨 << 예시로 마우스 키보드 입력이 동시에 일어날 수도 있음
         if event.type == pygame.QUIT:
             exit = True
+        if event.type == pygame.KEYDOWN:
+            key_name = pygame.key.name(event.key)   # 키 누른 거 알아내고
+            if len(key_name) == 1:                  # 알파벳 한 글자만 눌렸을 때를 가정
+                if (ord(key_name) >= 65 and ord(key_name) <= 90) or (ord(key_name) >= 97 and ord(key_name) <= 122):
+                    entry_text = key_name.upper()   # 아스키코드를 사용하여 영문 대소문자일때 입력을 받되, 출력은 대문자(.upper())로 한다.
+                else : entry_text = ""              # 이외의 경우는 빈칸을 넣는다.
+            else : entry_text = ""
+            if (key_name == "return" or key_name == "enter") and entry_text != "":
+                enter_go == True
             
     # 4-3. 입력, 시간에 따른 변화
     k += 1
@@ -124,7 +135,6 @@ while not exit:
     screen.blit(hint, hint_pos)
     
     # 입력창 표시하기
-    entry_text = "Q"
     entry = entry_font.render(entry_text, True, black)
     entry_size = entry.get_size()
     entry_pos = tup_r((size[0]/2-entry_size[0]/2, size[1]*17/18-entry_size[1]/2))
