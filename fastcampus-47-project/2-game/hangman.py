@@ -14,8 +14,10 @@ clock = pygame.time.Clock()
 black = (0,0,0)
 white = (255, 255, 255)
 red = (255,0,0)
+
 hint_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80)
 entry_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 60)
+no_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 60)
 
 # 소숫점을 정수로 변경해주는 함수
 def tup_r(tup):
@@ -27,7 +29,6 @@ def tup_r(tup):
     return tuple(temp_list)
 
 entry_text = ""
-try_num = 0
 enter_go = False
 drop = False
 exit = False
@@ -45,7 +46,7 @@ while True:
 word = word.upper()
 
 #  단어의 글자 수만큼 밑줄을 긋는다.
-word_show = "_ "*len(word)
+word_show = "?"*len(word)
 try_num = 0
 ok_list = []        # 정답 알파벳을 넣는 리스트
 no_list = []        # 오답 알파벳을 넣는 리스트
@@ -64,20 +65,21 @@ while not exit:
             exit = True
         if event.type == pygame.KEYDOWN:
             key_name = pygame.key.name(event.key)   # 키 누른 거 알아내고
-            if (key_name == "return" or key_name == "enter") and entry_text != "":
-                enter_go = True   
-            if len(key_name) == 1:                  # 알파벳 한 글자만 눌렸을 때를 가정
+            if (key_name == "return" or key_name == "enter"):       # 두 리스트를 합치고, 입력한 알파벳이 두 리스트에 없을 때만 enter_go를 True로 한다. 
+                if entry_text != "" and (ok_list+no_list).count(entry_text) == 0 :
+                    enter_go = True   
+            elif len(key_name) == 1:                  # 알파벳 한 글자만 눌렸을 때를 가정
                 if (ord(key_name) >= 65 and ord(key_name) <= 90) or (ord(key_name) >= 97 and ord(key_name) <= 122):
                     entry_text = key_name.upper()   # 아스키코드를 사용하여 영문 대소문자일때 입력을 받되, 출력은 대문자(.upper())로 한다.
                 else : entry_text = ""              # 이외의 경우는 빈칸을 넣는다.
             else : entry_text = ""
             
     # 4-3. 입력, 시간에 따른 변화
-    k += 1
     
     # 알파벳을 입력하고 엔터를 누를 경우, 알파벳이 문제단어에 있는지 찾는다.
     # 없다면 no_list에 추가하고, 있다면 ok_list에 알파벳을 추가한다.
     # 알파벳이 포함되는 경우, 알파벳을 다음과 같이 보여준다 sc + r + een
+    if try_num == 8 : k += 1
     if enter_go == True:
         ans = entry_text
         result = word.find(ans)
@@ -89,7 +91,7 @@ while not exit:
             for i in range(len(word)):
                 if word[i] == ans:
                     word_show = word_show[:i] + ans + word_show[i+1:]
-        enter_go = False
+        enter_go = False  
         entry_text = ""
     
     # 4-4. 그리기
@@ -129,7 +131,6 @@ while not exit:
     I = (H[0], H[1]+r_head)
     if try_num >= 2 :pygame.draw.line(screen, white, H, I, 3)
 
-        
     # 사선 그리기
     l_arm = r_head*2
     
@@ -184,6 +185,12 @@ while not exit:
     pygame.draw.rect(screen, white, (size[0]/2-entry_bg_size/2, size[1]*17.5/18-entry_bg_size/2
                                      ,entry_bg_size ,entry_bg_size))
     screen.blit(entry, entry_pos)
+    
+        # 오답 표시하기
+    no_text = " ".join(no_list)
+    no = no_font.render(no_text, True, red)
+    no_pos = tup_r((20, size[1]*2/3+20))
+    screen.blit(no, no_pos)
     
     # 4-5. 업데이트
     pygame.display.flip()
