@@ -1,5 +1,4 @@
-import pygame
-import math
+import pygame, math
 
 # 1. 게임 초기화
 pygame.init()
@@ -14,7 +13,7 @@ pygame.display.set_caption(title)
 clock = pygame.time.Clock()
 black = (0,0,0)
 white = (255, 255, 255)
-exit = False
+red = (255,0,0)
 
 # 소숫점을 정수로 변경해주는 함수
 def tup_r(tup):
@@ -25,10 +24,14 @@ def tup_r(tup):
         
     return tuple(temp_list)
 
+drop = False
+exit = False
+k = 0
+
 # 4. 메인 이벤트
 while not exit:
     # 4-1. FPS 설정
-    clock.tick()
+    clock.tick(60)
     
     # 4-2. 각종 입력 감지
     for event in pygame.event.get():  # 리스트로 반환됨 << 예시로 마우스 키보드 입력이 동시에 일어날 수도 있음
@@ -36,6 +39,7 @@ while not exit:
             exit = True
             
     # 4-3. 입력, 시간에 따른 변화
+    k += 1
     
     # 4-4. 그리기
     screen.fill(black)
@@ -52,12 +56,19 @@ while not exit:
     pygame.draw.line(screen, white, D, E, 3)
     
     F = tup_r((E[0], E[1]+size[0]/6))
-
     pygame.draw.line(screen, white, E, F, 3)
     
     # 얼굴 (동그라미) 그리기
+    # G는 사람의 모든 좌표와 연결되어 있어서, 사럄이 떨어질 때 이 좌표만 움직이면 된다. 
+    if drop == False:
+        pygame.draw.line(screen, white, E, F, 3)
     r_head = round(size[0]/12)
-    G = (F[0], F[1]+r_head)
+    
+    # 만약 drop이 True라면, 좌표상으로 떨어질 수 있도록 (+가 내려가는 거임) k를 더해준다
+    # k는 while문이 반복될 때마다 (철자를 틀릴 때마다) 1씩 늘어남.
+    # k가 점점 커져 P에 영향을 주고, P가 특정 숫자가 되는 순간 drop이 True가 되며 줄이 잘리고 사람이 떨어지는 애니메이션이 발생함.
+    if drop == True : G = (F[0],F[1]+r_head+k*10)
+    else : G = (F[0],F[1]+r_head)
     pygame.draw.circle(screen, white, G, r_head, 3)
     
     # 목 그리기 
@@ -89,6 +100,16 @@ while not exit:
     N = tup_r(N)  
     pygame.draw.line(screen, white, L, M, 3)
     pygame.draw.line(screen, white, L, N, 3)      
+    
+    # 줄 자르기 위한 빨간 줄 애니메이션 코드
+    if drop == False:
+        O = tup_r((size[0]/2-size[0]/6, E[1]/2+F[1]/2))
+        P = (O[0]+k*2, O[1])
+        if P[0] > size[0]/2+size[0]/6 :
+            P = tup_r((size[0]/2+size[0]/6, O[1]))
+            drop = True
+            k = 0
+        pygame.draw.line(screen, red, O, P, 3)
     
     # 4-5. 업데이트
     pygame.display.flip()
