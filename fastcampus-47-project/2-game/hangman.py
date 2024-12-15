@@ -21,6 +21,18 @@ title_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80
 guide_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 20)
 finish_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 30)
 
+sound_bad = pygame.mixer.Sound("bad.ogg")
+sound_good = pygame.mixer.Sound("good.ogg")
+sound_clock = pygame.mixer.Sound("clock.ogg")
+sound_save = pygame.mixer.Sound("save.ogg")
+sound_fail = pygame.mixer.Sound("fail.ogg")
+
+sound_bad.set_volume(0.2)
+sound_good.set_volume(0.2)
+sound_clock.set_volume(0.2)
+sound_save.set_volume(0.2)
+sound_fail.set_volume(0.2)
+
 # 소숫점을 정수로 변경해주는 함수
 def tup_r(tup):
     temp_list = []
@@ -60,6 +72,9 @@ while not exit:
     k = 0
 
     # 시작 화면
+    sound_save.stop()
+    sound_fail.stop()
+    
     while not exit:
         clock.tick(60)
         for event in pygame.event.get():
@@ -81,6 +96,8 @@ while not exit:
         pygame.display.flip()
         
     # 4. 메인 이벤트
+    sound_clock.play(-1)
+    
     # 반복되는 것들은 여기 안에서 실행됨
     while not exit:
         # 4-1. FPS 설정
@@ -115,11 +132,13 @@ while not exit:
             if result == -1 : #없음
                 try_num += 1
                 no_list.append(ans)
+                sound_bad.play()
             else : #있음
                 ok_list.append(ans)
                 for i in range(len(word)):
                     if word[i] == ans:
                         word_show = word_show[:i] + ans + word_show[i+1:]
+                sound_good.play()
             enter_go = False  
             entry_text = ""
           
@@ -127,11 +146,14 @@ while not exit:
         if drop == True: 
             game_over = True
             word_show = word
+            sound_clock.stop()
     
         # 성공으로 종료
         if word_show.find("?") == -1 and game_over == False : 
             game_over = True
             save = True
+            sound_clock.stop()
+            sound_save.play()
         
         # 4-4. 그리기
         screen.fill(black)
@@ -203,6 +225,7 @@ while not exit:
                 P = tup_r((size[0]/2+size[0]/6, O[1]))
                 drop = True
                 k = 0
+                sound_fail.play()
             pygame.draw.line(screen, red, O, P, 3)
         
         # 힌트 표시하기
