@@ -6,8 +6,7 @@ pygame.init()
 # 2. 게임창 옵션 설정
 size = [500, 900]
 screen = pygame.display.set_mode(size)
-title = "HANGMAN"
-pygame.display.set_caption(title)
+pygame.display.set_caption("HANGMAN")
 
 # 3. 게임 내 필요한 설정
 clock = pygame.time.Clock()
@@ -18,6 +17,8 @@ red = (255,0,0)
 hint_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80)
 entry_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 60)
 no_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 60)
+title_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80)
+guide_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 20)
 
 # 소숫점을 정수로 변경해주는 함수
 def tup_r(tup):
@@ -32,6 +33,7 @@ entry_text = ""
 enter_go = False
 drop = False
 exit = False
+ready = False
 
 #  A가 영어 단어를 1개 생각한다.
 f = open("voca.txt","r",encoding='UTF-8')
@@ -53,6 +55,27 @@ no_list = []        # 오답 알파벳을 넣는 리스트
 
 k = 0
 
+# 시작 화면
+while not exit:
+    clock.tick(60)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit = True   
+        if event.type == pygame.KEYDOWN:
+            ready = True
+    if ready == True: break             
+    screen.fill(black)
+    title = title_font.render("HANGMAN", True, white)
+    title_size = title.get_size()
+    title_pos = tup_r((size[0]/2-title_size[0]/2, size[1]/2-title_size[1]/2))
+    screen.blit(title, title_pos)
+    guide = guide_font.render("PRESS ANY KEY TO START THE GAME", True, white)
+    guide_size = guide.get_size()
+    guide_pos = tup_r((size[0]/2-guide_size[0]/2, size[1]*4/5-guide_size[1]/2))
+    if pygame.time.get_ticks() % 1000 > 500 :
+        screen.blit(guide, guide_pos)    
+    pygame.display.flip()
+    
 # 4. 메인 이벤트
 # 반복되는 것들은 여기 안에서 실행됨
 while not exit:
@@ -109,12 +132,11 @@ while not exit:
     pygame.draw.line(screen, white, D, E, 3)
     
     F = tup_r((E[0], E[1]+size[0]/6))
-    pygame.draw.line(screen, white, E, F, 3)
+    if drop == False:
+        pygame.draw.line(screen, white, E, F, 3)
     
     # 얼굴 (동그라미) 그리기
     # G는 사람의 모든 좌표와 연결되어 있어서, 사럄이 떨어질 때 이 좌표만 움직이면 된다. 
-    if drop == False:
-        pygame.draw.line(screen, white, E, F, 3)
     r_head = round(size[0]/12)
     
     # 만약 drop이 True라면, 좌표상으로 떨어질 수 있도록 (+가 내려가는 거임) k를 더해준다
@@ -182,8 +204,8 @@ while not exit:
     
     # 입력 텍스트 뒤의 하얀 네모창 만들기 (.rect)
     # 도형은 왼쪽 위 좌표가 필요함 >> 왼쪽위x, 왼쪽위y
-    pygame.draw.rect(screen, white, (size[0]/2-entry_bg_size/2, size[1]*17.5/18-entry_bg_size/2
-                                     ,entry_bg_size ,entry_bg_size))
+    pygame.draw.rect(screen, white, tup_r((size[0]/2-entry_bg_size/2, size[1]*17/18-entry_bg_size/2
+                                     ,entry_bg_size ,entry_bg_size)))
     screen.blit(entry, entry_pos)
     
         # 오답 표시하기
