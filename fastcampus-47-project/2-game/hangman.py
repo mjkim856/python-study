@@ -105,11 +105,13 @@ while not exit:
         
         # 4-2. 각종 입력 감지
         for event in pygame.event.get(): # 리스트로 반환됨 << 예시로 마우스 키보드 입력이 동시에 일어날 수도 있음
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT:  
                 exit = True
             if event.type == pygame.KEYDOWN:
+                if drop == False and try_num == 8:        # 실패시 빨간 줄이 그어지는 동안 키 입력 불가하게 함
+                    continue
                 if game_over == True: play_again = True
-                key_name = pygame.key.name(event.key)   # 키 누른 거 알아내고
+                key_name = pygame.key.name(event.key)     # 키 누른 거 알아내고
                 if (key_name == "return" or key_name == "enter"):       # 두 리스트를 합치고, 입력한 알파벳이 두 리스트에 없을 때만 enter_go를 True로 한다. 
                     if entry_text != "" and (ok_list+no_list).count(entry_text) == 0 :
                         enter_go = True   
