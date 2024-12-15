@@ -14,6 +14,7 @@ clock = pygame.time.Clock()
 black = (0,0,0)
 white = (255, 255, 255)
 red = (255,0,0)
+hint_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80)
 
 # 소숫점을 정수로 변경해주는 함수
 def tup_r(tup):
@@ -110,6 +111,15 @@ while not exit:
             drop = True
             k = 0
         pygame.draw.line(screen, red, O, P, 3)
+    
+    # 힌트 표시하기
+    word_show = "___"
+    # hint_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80)
+    # while문 내에서 외부파일을 계속 불러오면 시스템에 부하를 줄 수 있기에 while문 밖으로 빼 줌
+    hint = hint_font.render(word_show, True, white)
+    hint_size = hint.get_size()
+    hint_pos = tup_r((size[0]/2-hint_size[0]/2, size[1]*5/6-hint_size[1]/2))
+    screen.blit(hint, hint_pos)
     
     # 4-5. 업데이트
     pygame.display.flip()
