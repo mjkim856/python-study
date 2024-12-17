@@ -1,0 +1,26 @@
+Lambda AWS의 서버리스 서비스  
+CloudFunctions GCP의 서버리스 함수 서비스  
+ElasticComputeCloud AWS의 가상 서버 서비스  
+ComputeEngine GCP의 가상 머신 서비스  
+SimpleStorageService AWS의 객체 스토리지 서비스  
+CloudStorage GCP의 객체 스토리지 서비스  
+RelationalDatabaseService AWS의 관계형 데이터베이스 관리 서비스  
+CloudSQL GCP의 관계형 데이터베이스 관리 서비스  
+DynamoDB AWS의 NoSQL 데이터베이스 서비스  
+Firestore GCP의 NoSQL 데이터베이스 서비스  
+APIGateway AWS의 API 관리 및 배포 서비스  
+CloudEndpoints GCP의 API 관리 및 배포 서비스  
+VirtualPrivateCloud AWS의 네트워크 격리 서비스  
+VirtualPrivateCloud GCP의 네트워크 격리 서비스  
+CloudFront AWS의 콘텐츠 전송 네트워크 서비스  
+CloudCDN GCP의 콘텐츠 전송 네트워크 서비스  
+IdentityAndAccessManagement AWS의 사용자 인증 및 권한 관리 서비스  
+CloudIdentityAndAccessManagement GCP의 사용자 인증 및 권한 관리 서비스  
+Redshift AWS의 데이터 웨어하우스 서비스  
+BigQuery GCP의 데이터 웨어하우스 서비스  
+Athena AWS의 SQL 기반 데이터 쿼리 서비스  
+CloudDataflow GCP의 스트리밍 및 배치 데이터 처리 서비스  
+StepFunctions AWS의 서버리스 워크플로우 서비스  
+CloudComposer GCP의 워크플로우 자동화 서비스  
+SageMaker AWS의 머신러닝 모델 개발 및 배포 서비스  
+VertexAI GCP의 머신러닝 모델 개발 및 배포 서비스  
