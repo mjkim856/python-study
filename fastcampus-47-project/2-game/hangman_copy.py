@@ -113,10 +113,12 @@ while not exit:
 
         r_index = random.randrange(0, len(data_list))
         word = data_list[r_index].replace(u"\xa0", u" ").split(" ")[0].upper()
-        text = data_list[r_index].split()[1:]
+        text = " ".join(data_list[r_index].split()[1:])
 
     #  단어의 글자 수만큼 밑줄을 긋는다.
     word_show = "?"*len(word)
+    text_show = text
+    print(text)
     try_num = 0
     ok_list = []        # 정답 알파벳을 넣는 리스트
     no_list = []        # 오답 알파벳을 넣는 리스트
@@ -256,7 +258,7 @@ while not exit:
                 sound_fail.play()
             pygame.draw.line(screen, red, O, P, 3)
         
-        # 힌트 표시하기
+        # 힌트 표시하기 (정답 표시하기?)
         # hint_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80)
         # while문 내에서 외부파일을 계속 불러오면 시스템에 부하를 줄 수 있기에 while문 밖으로 빼 줌
         hint = hint_font.render(word_show, True, white)
@@ -288,12 +290,19 @@ while not exit:
             finish_bg.fill(black)
             finish_bg.set_alpha(200)
             screen.blit(finish_bg, (0,0))
+            
             if save == True: finish_text = "You saved the man"
             else : finish_text = "You killed the man"
             finish = finish_font.render(finish_text, True, white)
             finish_size = finish.get_size()
             finish_pos = tup_r((size[0]/2-finish_size[0]/2, size[1]*3/4-finish_size[1]/2))
             screen.blit(finish, finish_pos)
+            
+            explain = finish_font.render(text, True, white)
+            ex_size = explain.get_size()
+            ex_pos = tup_r((size[0]/2-ex_size[0]/2, size[1]*5/6-ex_size[1]/2 + 20))
+            screen.blit(explain, ex_pos)
+            
             guide = guide_font.render("PRESS ANY KEY TO PLAY AGAIN", True, white)
             guide_size = guide.get_size()
             guide_pos = tup_r((size[0]/2-guide_size[0]/2, size[1]*4/5-guide_size[1]/2))
