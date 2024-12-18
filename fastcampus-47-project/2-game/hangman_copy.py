@@ -14,12 +14,13 @@ black = (0,0,0)
 white = (255, 255, 255)
 red = (255,0,0)
 
-hint_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 40)
-entry_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 60)
-no_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 40)
-title_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 80)
-guide_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 30)
-finish_font = pygame.font.Font("/System/Library/Fonts/Supplemental/Arial.ttf", 30)
+hint_font = pygame.font.Font("/System/Library/Fonts/Supplemental/AppleGothic.ttf", 35)
+entry_font = pygame.font.Font("/System/Library/Fonts/Supplemental/AppleGothic.ttf", 60)
+no_font = pygame.font.Font("/System/Library/Fonts/Supplemental/AppleGothic.ttf", 40)
+title_font = pygame.font.Font("/System/Library/Fonts/Supplemental/AppleGothic.ttf", 80)
+guide_font = pygame.font.Font("/System/Library/Fonts/Supplemental/AppleGothic.ttf", 30)
+finish_font = pygame.font.Font("/System/Library/Fonts/Supplemental/AppleGothic.ttf", 30)
+explain_font = pygame.font.Font("/System/Library/Fonts/Supplemental/AppleGothic.ttf", 20)
 
 sound_bad = pygame.mixer.Sound("bad.ogg")
 sound_good = pygame.mixer.Sound("good.ogg")
@@ -64,6 +65,7 @@ while not exit:
             if event.type == pygame.QUIT:
                 exit = True   
             if event.type == pygame.KEYDOWN:
+                is_cloud = False
                 ready = True
                 key_name = pygame.key.name(event.key)     # 키 누른 거 알아내고
                 if (key_name == "return" or key_name == "enter"): 
@@ -118,7 +120,7 @@ while not exit:
     #  단어의 글자 수만큼 밑줄을 긋는다.
     word_show = "?"*len(word)
     text_show = text
-    print(text)
+    print(text_show)
     try_num = 0
     ok_list = []        # 정답 알파벳을 넣는 리스트
     no_list = []        # 오답 알파벳을 넣는 리스트
@@ -298,7 +300,7 @@ while not exit:
             finish_pos = tup_r((size[0]/2-finish_size[0]/2, size[1]*3/4-finish_size[1]/2))
             screen.blit(finish, finish_pos)
             
-            explain = finish_font.render(text, True, white)
+            explain = explain_font.render(text, True, white)
             ex_size = explain.get_size()
             ex_pos = tup_r((size[0]/2-ex_size[0]/2, size[1]*5/6-ex_size[1]/2 + 20))
             screen.blit(explain, ex_pos)
