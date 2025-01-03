@@ -7,9 +7,9 @@ def call_api(keyword, start, display):
     print(res)
     r = res.json()
     return r
-    
+
 if __name__ == '__main__':      # import 가능하도록 main 사용
-    r = call_api("정부과천청사역", 1001, 2)
+    r = call_api("정부과천청사역", 1, 2)
     for item in r['items']:
         print(item)
         print()
