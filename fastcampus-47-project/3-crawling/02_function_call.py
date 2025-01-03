@@ -1,9 +1,15 @@
 import requests
 
-url = "https://openapi.naver.com/v1/search/blog.json?query=과천 맛집&start=10000&display=5"
-res = requests.get(url, headers={"X-Naver-Client-Id": "pNdISaOoIKomHA0fPeSu",
-                                 "X-Naver-Client-Secret": "h0ypZof0aY"})
-print(res.json())
-r = res.json()
-
-# print(r['items']) << json()은 딕셔너리 형식으로 출력되어서, 이런 식으로 원하는 항목을 확인할 수 있다. 
+def call_api(keyword, start, display):
+    url = f"https://openapi.naver.com/v1/search/blog.json?query={keyword}&start={start}&display={display}"
+    res = requests.get(url, headers={"X-Naver-Client-Id": "pNdISaOoIKomHA0fPeSu",
+                                    "X-Naver-Client-Secret": "h0ypZof0aY"})
+    print(res)
+    r = res.json()
+    return r
+    
+if __name__ == '__main__':      # import 가능하도록 main 사용
+    r = call_api("정부과천청사역", 1001, 2)
+    for item in r['items']:
+        print(item)
+        print()
