@@ -1,8 +1,8 @@
 import requests
 
-url = "https://openapi.naver.com/v1/search/blog.json?query=과천 맛집&start=10000&display=5"
+url = "https://openapi.naver.com/v1/search/blog.json?query=과천 맛집&start=100&display=5"
 res = requests.get(url, headers={"X-Naver-Client-Id": "pNdISaOoIKomHA0fPeSu",
-                                 "X-Naver-Client-Secret": "h0ypZof0aY"})
+                                 "X-Naver-Client-Secret": "RdzEPmpxS2"})
 print(res.json())
 r = res.json()
 

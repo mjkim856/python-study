@@ -3,7 +3,7 @@ import requests
 def call_api(keyword, start, display):
     url = f"https://openapi.naver.com/v1/search/blog.json?query={keyword}&start={start}&display={display}"
     res = requests.get(url, headers={"X-Naver-Client-Id": "pNdISaOoIKomHA0fPeSu",
-                                    "X-Naver-Client-Secret": "h0ypZof0aY"})
+                                    "X-Naver-Client-Secret": "RdzEPmpxS2"})
     print(res)
     r = res.json()
     return r
